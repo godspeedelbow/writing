@@ -31,9 +31,9 @@ Consider the following functionality:
 - parse the posts with the comments
 - log the user and the parsed posts
 
-You can implement the above functionality with async/await quite elegantly as follows.
+You can implement the above functionality with `async/await` quite elegantly as follows.
 
-### Promises - using async-await
+### Promises, using async-await
 
 ```js
 const run = async (userId) => {
@@ -87,7 +87,7 @@ const run = (userId) => {
 - there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it)
 - you can also store data in the outer function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the scope of `run`. You can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`). However, both solutions don't scale well as functionality increases in complexity
 
-### `async` module
+### [`async` module](http://caolan.github.io/async/)
 
 ```js
 const run = (userId) => {
@@ -167,4 +167,4 @@ const done = (err, postsWithComments) => {
 
 With `async/await`, you can write code that is easier to read and reason about. Why wait?
 
-It's native Javascript, so it's a matter of time before it's widely supported. To start using it today, use node 7 with `--harmony`. It's also supported by Chrome (link tweet) and in any case, you can always use `babel` to transpile it into regular ol' javascript.
+It's native Javascript, so it's a matter of time before it's widely supported. To start using it today, use node 7 with `--harmony`. It's also [supported by Chrome](https://twitter.com/addyosmani/status/789126892402204673) and in any case, you can always use `babel` to transpile it into regular ol' javascript.
