@@ -1,8 +1,8 @@
 # Wait up for `async/await`, it's great
 
-`async/await` is a new javascript feature that allows you to write asynchronous code without callbacks. This makes your code easier to read and reason about. 
+`async/await` is a new javascript feature that allows you to write asynchronous code without callbacks. This makes your code easier to read and easier to reason about. 
 
-Whenever you use a Promise to deal with asynchronicity, use the `await` keyword to 'halt' the code execution cursor until the Promise is resolved.
+It works like this: whenever you use a Promise to deal with asynchronicity, use the `await` keyword to 'halt' the code execution cursor until the Promise is resolved.
 
 *old goodness:*
 ```js
@@ -15,10 +15,10 @@ const user = await getUserPromise(userId); // put result in `user` when Promise 
 console.log('user', user); // continue sychronously as if nothing happened
 ```
 
-As you don't need to use a callback anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_. This sounds like a small win, but I have noticed that it makes your code much easier to read and reason about because:
+As you don't need to use callbacks anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
 
-- **less functions** means less boiler plate and less indentation
 - **'sychronous' execution** is easier to comprehend
+- **less functions** means less boiler plate and less indentation
 - a **single, shared function scope** removes the need to 'pass data around' - _it's just there_
 
 ## A non-trivial example
@@ -59,6 +59,7 @@ try {
 **Note:**
 - whenever you use `await`, the surrounding function needs be declared te be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
+- complete error stack, because we use Promises
 
 Looks quite neat, huh? Easy to read and easy to reason about! Now consider how this code would look if you don't use `async/await`.
 
@@ -84,8 +85,7 @@ const run = (userId) => {
 
 **Note:**
 - there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it)
-- you can also store data in the outer function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the scope of `run`
-- you can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`)
+- you can also store data in the outer function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the scope of `run`. You can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`). However, both solutions don't scale well as functionality increases in complexity
 
 ### `async` module
 
@@ -117,9 +117,11 @@ const run = (userId) => {
 ```
 
 **Note:**
-- you can also use other control flow libraries to achieve the same result
+- 'passing along data' is cumbersome and so is error-handling (`if (err) return done(err);` much lately?)
+- because of the nature of callbacks in nodejs, errors stacks are incomplete
+- there are other control flow libraries that offer similar solutions
 
-### Only callbacks
+### Mere callbacks
 
 ```js
 const run = (userId) => {
@@ -159,8 +161,7 @@ const done = (err, postsWithComments) => {
 ```
 
 **Note:**
-- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly like this
-- `if (err) done(err)` much? (in practice, you encounter this continuosly when using the `async` module as well)
+- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction
 
 ## Why wait?
 
