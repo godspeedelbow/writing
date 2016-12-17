@@ -59,7 +59,6 @@ try {
 **Note:**
 - whenever you use `await`, the surrounding function needs to be declared to be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
-- complete error stack, because we use Promises
 
 Looks quite neat, huh? Easy to read and easy to reason about! Now consider how this code would look if you don't use `async/await`.
 
@@ -165,6 +164,4 @@ const done = (err, postsWithComments) => {
 
 ## Why wait?
 
-With `async/await`, you can write code that is easier to read and reason about. Why wait?
-
-It's native Javascript, so it's a matter of time before it's widely supported. To start using it today, use node 7 with `--harmony`. It's also [supported by Chrome](https://twitter.com/addyosmani/status/789126892402204673) and in any case, you can always use `babel` to transpile it into regular ol' javascript.
+With `async/await`, you can write code that is easier to read and reason about. It's native Javascript so it's a matter of time before it's widely supported. To start using it today, use node 7 with `--harmony`. It's also [supported by Chrome](https://twitter.com/addyosmani/status/789126892402204673) and in any case, you can always use `babel` to transpile it into regular ol' javascript.
