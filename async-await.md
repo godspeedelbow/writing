@@ -26,17 +26,10 @@ As you don't need to use a callback anymore to deal with asynchronicity, you can
 The power of `async/await` truly shines in situations where there are multiple asynchronous operations that need to be composed in to a single result.
 
 Consider the following functionality:
-fetch a user and their posts (in parallel)
-get the comments on those posts
-parse the posts with the comments
-log the user and the parsed posts
-
-
-[image subscript:]
-`getUser` (A), `getPosts` (B) can be executed immediately and in parallel
-`getComments` (C) depends on (the completion of) `getPosts` (B)
-`parsePostsWithComments` (D) depends on `getComments` (C)
-finally, logging (E) depends on `getUser` (A) and `parsePostsWithComments` (D)
+- fetch a user and their posts (in parallel)
+- get the comments on those posts
+- parse the posts with the comments
+- log the user and the parsed posts
 
 You can implement the above functionality with async/await quite elegantly as follows.
 
@@ -63,7 +56,7 @@ try {
 }
 ```
 
-Notes:
+**Note:**
 - whenever you use `await`, the surrounding function needs be declared te be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
 
@@ -89,9 +82,10 @@ const run = (userId) => {
 }
 ```
 
-Note:
-- there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it).
-- you can also use a Promise library to store the data (e.g. `user`) on a context object so that it is available in subsequent Promises. However, hat abstraction is just as leaky.
+**Note:**
+- there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it)
+- you can also store data in the outer function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the scope of `run`
+- you can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`)
 
 ### `async` module
 
@@ -99,12 +93,12 @@ Note:
 const run = (userId) => {
   async.waterfall([
     callback => {
-      async.parallel({
-        user: cb => getUser(userId, cb),
-        posts: cb => getPosts(userId, cb),
-      }, callback);
+      async.parallel([
+        cb => getUser(userId, cb),
+        cb => getPosts(userId, cb),
+      ], callback);
     },
-    ({user, posts}, callback) => {
+    ([user, posts], callback) => {
       getComments(posts, (err, comments) => callback(err, user, posts, comments));
     },
     (user, posts, comments, callback) => {
@@ -122,8 +116,7 @@ const run = (userId) => {
 }
 ```
 
-Note:
-- you need to pass data along the whole time
+**Note:**
 - you can also use other control flow libraries to achieve the same result
 
 ### Only callbacks
@@ -164,6 +157,10 @@ const done = (err, postsWithComments) => {
   }
 };
 ```
+
+**Note:**
+- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly like this
+- `if (err) done(err)` much? (in practice, you encounter this continuosly when using the `async` module as well)
 
 ## Why wait?
 
