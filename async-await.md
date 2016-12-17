@@ -1,0 +1,172 @@
+# Wait up for `async/await`, it's great
+
+`async/await` is a new javascript feature that allows you to write asynchronous code without callbacks. This makes your code easier to read and reason about. 
+
+Whenever you use a Promise to deal with asynchronicity, use the `await` keyword to 'halt' the code execution cursor until the Promise is resolved.
+
+*old goodness:*
+```js
+getUserPromise(userId).then(user => console.log('user', user)); // execute the callback when Promise resolves
+```
+
+*new goodness:*
+```js
+const user = await getUserPromise(userId); // put result in `user` when Promise resolves
+console.log('user', user); // continue sychronously as if nothing happened
+```
+
+As you don't need to use a callback anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_. This sounds like a small win, but I have noticed that it makes your code much easier to read and reason about because:
+
+- **less functions** means less boiler plate and less indentation
+- **'sychronous' execution** is easier to comprehend
+- a **single, shared function scope** removes the need to 'pass data around' - _it's just there_
+
+## A non-trivial example
+
+The power of `async/await` truly shines in situations where there are multiple asynchronous operations that need to be composed in to a single result.
+
+Consider the following functionality:
+fetch a user and their posts (in parallel)
+get the comments on those posts
+parse the posts with the comments
+log the user and the parsed posts
+
+
+[image subscript:]
+`getUser` (A), `getPosts` (B) can be executed immediately and in parallel
+`getComments` (C) depends on (the completion of) `getPosts` (B)
+`parsePostsWithComments` (D) depends on `getComments` (C)
+finally, logging (E) depends on `getUser` (A) and `parsePostsWithComments` (D)
+
+You can implement the above functionality with async/await quite elegantly as follows.
+
+### Promises - using async-await
+
+```js
+const run = async (userId) => {
+  const [user, posts] = await Promise.all([
+    getUser(userId),
+    getPosts(userId),
+  ]);
+
+  const comments = await getComments(posts);
+  const postsWithComments = await parsePostsWithComments(posts, comments);
+
+  console.log('user', user);
+  console.log('postsWithComments', postsWithComments);
+}
+
+try {
+  run(userId);
+} catch (err) {
+  console.log('err', err);
+}
+```
+
+Notes:
+- whenever you use `await`, the surrounding function needs be declared te be `async`
+- use `try/catch` to handle any Promise that fails within the `async` function
+
+Looks quite neat, huh? Easy to read and easy to reason about! Now consider how this code would look if you don't use `async/await`.
+
+### Promises, without async/await
+
+```js
+const run = (userId) => {
+  Promise.all([
+    getUser(userId),
+    getPosts(userId),
+  ]).then([user, posts, comments] => {
+    getComments(posts).then(comments => {
+      parsePostsWithComments(posts, comments).then(postsWithComments => {
+        console.log('user', user);
+        console.log('postsWithComments', postsWithComments);
+      });
+    });
+  }).fail(err => {
+    console.log('err', err);
+  });
+}
+```
+
+Note:
+- there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it).
+- you can also use a Promise library to store the data (e.g. `user`) on a context object so that it is available in subsequent Promises. However, hat abstraction is just as leaky.
+
+### `async` module
+
+```js
+const run = (userId) => {
+  async.waterfall([
+    callback => {
+      async.parallel({
+        user: cb => getUser(userId, cb),
+        posts: cb => getPosts(userId, cb),
+      }, callback);
+    },
+    ({user, posts}, callback) => {
+      getComments(posts, (err, comments) => callback(err, user, posts, comments));
+    },
+    (user, posts, comments, callback) => {
+      parsePostsWithComments(posts, comments, (err, postsWithComments) => {
+        callback(err, user, postsWithComments);
+      });
+    },
+  ], (err, user, postsWithComments) => {
+    if (err) {
+      console.log('err', err);
+    } else 
+      console.log('user', user);
+      console.log('postsWithComments', postsWithComments);
+  });
+}
+```
+
+Note:
+- you need to pass data along the whole time
+- you can also use other control flow libraries to achieve the same result
+
+### Only callbacks
+
+```js
+const run = (userId) => {
+  let user;
+  let posts;
+
+  getUser(user, (err, _user) => {
+    if (err) return done(err);
+    user = _user;
+    if (posts) pleaseContinue(); // `posts` already fetched? continue
+  });
+  getPosts(posts, (err, _posts) => {
+    if (err) return done(err);
+    posts = _posts;
+    if (user) pleaseContinue(); // `user` already fetched? continue
+  });
+
+  const pleaseContinue = () => {
+    getComments(posts, (err, comments) => {
+      if (err) return done(err);
+
+      parsePostsWithComments(posts, comments, (err, postsWithComments) => {
+        done(err, user, postsWithComments)
+      });
+    });
+  }
+}
+
+const done = (err, postsWithComments) => {
+  if (err) {
+    console.log('err', err);
+  } else 
+    console.log('user', user);
+    console.log('postsWithComments', postsWithComments);
+  }
+};
+```
+
+## Why wait?
+
+With `async/await`, you can write code that is easier to read and reason about. Why wait?
+
+It's native Javascript, so it's a matter of time before it's widely supported. To start using it today, use node 7 with `--harmony`. It's also supported by Chrome (link tweet) and in any case, you can always use `babel` to transpile it into regular ol' javascript.
