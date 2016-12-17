@@ -57,7 +57,7 @@ try {
 ```
 
 **Note:**
-- whenever you use `await`, the surrounding function needs be declared te be `async`
+- whenever you use `await`, the surrounding function needs to be declared to be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
 - complete error stack, because we use Promises
 
