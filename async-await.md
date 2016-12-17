@@ -1,4 +1,4 @@
-# Wait up for `async/await`, it's great
+# Wait up for `async/await`, it's great!
 
 `async/await` is a new javascript feature that allows you to write asynchronous code without callbacks. This makes your code easier to read and easier to reason about. 
 
