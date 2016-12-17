@@ -18,7 +18,7 @@ console.log('user', user); // continue sychronously as if nothing happened
 As you don't need to use callbacks anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
 
 - **'sychronous' execution** is easier to comprehend
-- **less functions** means less boiler plate and less indentation
+- **no callback functions** means less boiler plate and less indentation
 - a **single, shared function scope** removes the need to 'pass data around' - _it's just there_
 
 ## A non-trivial example
