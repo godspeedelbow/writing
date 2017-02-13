@@ -1,5 +1,5 @@
 
-Three clickbait reasons on why I quit Dvorak
+Three clickbait reasons why I quit Dvorak
 ==============================================================
 
 Before I started writing my master thesis back in 2010 I decided to switch to the Dvorak keyboard layout. I read [something](https://ma.tt/2003/08/on-the-dvorak-keyboard-layout/) on it, and it seemed (and indeed, was - I had ample time) a great moment to start typing Dvorak. Now seven years later, I've switched back to Qwerty: the benefits don't justify the hassle anymore.
