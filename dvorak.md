@@ -2,7 +2,7 @@
 Three clickbait reasons why I quit Dvorak
 ==============================================================
 
-Before I started writing my master thesis back in 2010 I decided to switch to the Dvorak keyboard layout. I read [something](https://ma.tt/2003/08/on-the-dvorak-keyboard-layout/) on it, and it seemed (and indeed, was - I had ample time) a great moment to start typing Dvorak. Now seven years later, I've switched back to Qwerty: the benefits don't justify the hassle anymore.
+Before I started writing my master thesis back in 2010 I decided to switch to the Dvorak keyboard layout. I read [something](https://ma.tt/2003/08/on-the-dvorak-keyboard-layout/) on it, and it seemed (and indeed, was - I had ample time) a great moment to start typing Dvorak. Now seven years later, I'm switching back to Qwerty: the benefits don't justify the hassle anymore.
 
 The premise of Dvorak is that it is an efficient keyboard layout. Keys are positioned in such a way that when you rest your fingers on the keyboard (the home bar), the letters you use most are right under your finger tips (left hand: `A`, `O`, `E`, `U`, `I` and right hand: `D`, `H`, `T`, `N`, `S`). This makes typing more comfortable because your fingers have to move around the keyboard ('finger travel') as little as possible. As an engineer with RSI issues, I found this a compelling argument ([although it's debatable](http://xahlee.info/kbd/myth_of_qwerty_dvorak_layout.html)).
 
