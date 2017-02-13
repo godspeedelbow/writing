@@ -59,6 +59,8 @@ Arguably, the longer the word is the less alternative interpretations there are.
 
 It's pretty easy to map your physical Qwerty keyboard to Dvorak in your Operation System's settings. It works well when you touch type but when you have to look down at your keyboard to type (for example because you only have one hand free to type), it gets pretty annoying. Looking at a Qwerty keyboard while typing Dvorak is a real mapping challenge. I type 'Ddpvd' to type my own name 'Eelke', 'bodavya;k' for 'breakfast' and 'Kjd Ldkjdopalh;' becomes 'The Netherlands'.
 
+![Dvorak words may sound hard to pronounce, but studies show they actually put less stress on the vocal cords.](https://imgs.xkcd.com/comics/voice_commands_2x.png)
+
 So, I decided to I switch the _physical_ keys around on both my MacBook and my extra keyboard. Wiggling off keys from your keyboard not only feels scary and risky, it actually is! I have so far destroyed two keyboards, even though I was really trying to be careful.
 
 On the upside, when finished with your keyboard make over, all the keys make sense again! For you, that is as nobody else but you will attempt to use it (there are those who try, get burned and exclaim, 'wtf is this?!' as if their Right To Type had just been revoked). If my MacBook were ever stolen, it would have probably been tossed away because switching those darned keys back is too much hassle - even for a petty thief.
