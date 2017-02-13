@@ -7,9 +7,10 @@ Before I started writing my master thesis back in 2010 I decided to switch to th
 The premise of Dvorak is that it is an efficient keyboard layout. Keys are positioned in such a way that when you rest your fingers on the keyboard (the home bar), the letters you use most are right under your finger tips (left hand: `A`, `O`, `E`, `U`, `I` and right hand: `D`, `H`, `T`, `N`, `S`). This makes typing more comfortable because your fingers have to move around the keyboard ('finger travel') as little as possible. As an engineer with RSI issues, I found this a compelling argument ([although it's debatable](http://xahlee.info/kbd/myth_of_qwerty_dvorak_layout.html)).
 
 ![Qwerty vs Dvorak heat map (image courtesy of xahlee.info)](http://xahlee.info/comp/i/qwerty_vs_dvorak_keyboard_layout_heat_map.jpg "Image shamelessly stolen from xahlee.info")
-Qwerty vs Dvorak heat map. The home bar is the row of keys between CAPS LOCK key and the Enter/return key. As you can see, on Dvorak the most common vowels are under your left hand and the most common consonants under your right hand (image courtesy of xahlee.info).
 
-Another upside is that because popular vowels and consonants are on separate sides of the keyboard, you end up typing alternating between your left and right hand, which is more comfortable and faster than typing entire words with a single hand. This benefit is less prevalent in Dutch because words often contain longer **v** owel and **c** onsonant combinations, e.g. 'schreeuw' (**ccccvvvc**) vs 'scream' (**cccvvc**).
+*Qwerty vs Dvorak heat map. The home bar is the row of keys between CAPS LOCK key and the Enter/return key. As you can see, on Dvorak the most common vowels are under your left hand and the most common consonants under your right hand (image courtesy of xahlee.info).*
+
+Another upside is that because popular vowels and consonants are on separate sides of the keyboard, you end up typing alternating between your left and right hand, which is more comfortable and faster than typing entire words with a single hand. This benefit is less prevalent in Dutch because words often contain longer **v**owel and **c**onsonant combinations, e.g. 'schreeuw' (**ccccvvvc**) vs 'scream' (**cccvvc**).
 
 After about one year on Dvorak I was typing faster than I did earlier on Qwerty. Plus, I was now a Cool Person™. Feeling cool however, has not made up for downsides of typing Dvorak. Here's why I switched back to Qwerty.
 
@@ -22,7 +23,11 @@ Keyboard shortcuts are often bound to a letter that makes sense semantically: `S
 
 The Dvorak was invented before shortcuts and is downright unhandy when it comes to common shortcuts. Not only are `Z`, `X`, `C` and `V` all over the place, they are also on the right (wrong) side of the keyboard. This makes it impossible to use these shortcuts with your left whilst at the same time using the mouse or arrow keys with your right hand.
 
-The opposite is also true: _uncommon_ shortcuts are easily accessible. Both `W` and `Q` are located immediately above the left and right `cmd` keys. If I accidentally strike the `W` or `Q` key a bit too low, I also accidentally strike the `cmd` key, resulting either in a closed window (`cmd + W`) or worse, a closed application (`cmd + Q`). And yes, drunk coding is nearly impossible on a Dvorak keyboard.
+The opposite is also true: _uncommon_ shortcuts are easily accessible. Both `W` and `Q` are located immediately above the left and right `cmd` keys. If I accidentally strike the `W` or `Q` key a bit too low, I also accidentally strike the `cmd` key, resulting either in a closed window (`cmd + W`) or worse, a closed application (`cmd + Q`). 
+
+![And yes, drunk coding is nearly impossible on a Dvorak keyboard](http://i.giphy.com/zOvBKUUEERdNm.gif)
+
+*And yes, drunk coding is nearly impossible on a Dvorak keyboard.*
 
 2. Dvorak is useless on smartphones
 -----------------------------------
@@ -35,15 +40,15 @@ All keyboards suffer from this problem but it's much worse with Dvorak. Because 
 
 For example, the following words are entirely possible alternatives when trying to type 'hot' in Dvorak on my smartphone (for simplification I only wrote down words with letters that are right next to `h`, `o` and `t`):
 
-Grammatically correct interpretations for 'hot' in Dvorak:
-dat, dan, doh, dot, don, det, den
-hah, hat, han, hon, heh, het, hen
-tat, tan, tot, ton, ten
-
 Grammatically correct interpretations for 'hot' in Qwerty:
 git
 hit, hor
 jot, joy
+
+Grammatically correct interpretations for 'hot' in Dvorak:
+dat, dan, doh, dot, don, det, den
+hah, hat, han, hon, heh, het, hen
+tat, tan, tot, ton, ten
 
 On a Qwerty keyboard you of course also have this problem (5 alternatives) but too a much lesser extent than Dvorak (19 alternatives) because the common letters are more spread out over the keyboard - which makes prediction at lot easier.
 
@@ -52,7 +57,7 @@ Arguably, the longer the word is the less alternative interpretations there are.
 3. You need custom keyboards
 ----------------------------
 
-It's pretty easy to map your physical Qwerty keyboard to Dvorak in your Operation System's settings. It works well when you touch type but when you have to look down when you type a letter (for example because you only have one hand free to type), it's pretty annoying. Looking at a Qwerty keyboard while typing Dvorak is a real mapping challenge. I type 'Ddpvd' to type my own name 'Eelke', 'bodavya;k' for 'breakfast' and 'Kjd Ldkjdopalh;' becomes 'The Netherlands'.
+It's pretty easy to map your physical Qwerty keyboard to Dvorak in your Operation System's settings. It works well when you touch type but when you have to look down at your keyboard to type (for example because you only have one hand free to type), it gets pretty annoying. Looking at a Qwerty keyboard while typing Dvorak is a real mapping challenge. I type 'Ddpvd' to type my own name 'Eelke', 'bodavya;k' for 'breakfast' and 'Kjd Ldkjdopalh;' becomes 'The Netherlands'.
 
 So, I decided to I switch the _physical_ keys around on both my MacBook and my extra keyboard. Wiggling off keys from your keyboard not only feels scary and risky, it actually is! I have so far destroyed two keyboards, even though I was really trying to be careful.
 
