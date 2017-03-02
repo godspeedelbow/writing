@@ -2,7 +2,7 @@
 
 `async/await` is a new javascript feature that allows you to wrap asynchronous code, so it appears to be synchronous. This makes your code easier to read and easier to reason about.
 
-*asynchronicity with callbacks:*
+*callbacks:*
 ```js
 getUser(userId, (err, user) => {
   if (err) return console.error('error', err);
@@ -10,14 +10,14 @@ getUser(userId, (err, user) => {
 });
 ```
 
-*asynchronicity with Promises:*
+*Promises:*
 ```js
 getUserPromise(userId)
   .then(user => console.log('user', user));
   .catch(err => console.error('error', err));
 ```
 
-*asynchronicity with Promises plus async/await:*
+*Promises with async/await:*
 ```js
 const user = await getUserPromise(userId); // 'await' the Promise to resolve and assign result to `user`
 console.log('user', user);
