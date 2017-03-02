@@ -1,3 +1,5 @@
+> This is the draft to https://medium.com/@godspeedelbow/wait-up-for-async-await-its-great-a69029cc1b6a#.3qls8hahn
+
 # Wait up for `async/await`, it's great!
 
 `async/await` is a new javascript feature that allows you to wrap asynchronous code, so it appears to be synchronous. This makes your code easier to read and easier to reason about.
