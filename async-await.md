@@ -23,7 +23,7 @@ const user = await getUserPromise(userId); // 'await' the Promise to resolve and
 console.log('user', user);
 ```
 
-The `await` keyword 'halts' the code execution cursor until the Promise is resolved. As you don't need to use callback functions anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
+The `await` keyword halts the code execution cursor until the Promise is resolved. As you don't need to use callback functions anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
 
 - **'synchronous' (downward) execution** is easier to read and therefore comprehend
 - **no callback functions** means less boiler plate and less indentation
@@ -31,7 +31,7 @@ The `await` keyword 'halts' the code execution cursor until the Promise is resol
 
 ## A trivial example
 
-The power of `async/await` truly shines in situations where there are multiple asynchronous operations that need to be composed in to a single result.
+The power of `async/await` truly shines in situations where there are *multiple asynchronous operations that need to be composed* in to a single result.
 
 Consider the following functionality:
 - fetch a user and their posts (in parallel, to speed up execution)
@@ -48,7 +48,7 @@ const run = async userId => {
     getUser(userId),
     getPosts(userId),
   ]);
-  // user and post are now available in scope
+
   const comments = await getComments(posts);
   return await parsePostsWithComments(user, posts, comments);
 }
@@ -64,7 +64,13 @@ try {
 - whenever you use `await`, the surrounding function needs to be declared to be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
 
-Looks quite neat, huh? Easy to read and easy to reason about! Now consider how this code would look if you don't use `async/await`.
+Looks quite neat, huh? Below I show how this could be implemented without `async/await` with only Promises/callbacks. What you is that the code has more boiler plate, is more indented and therefore harder to read.
+
+The reason for this is that although the example is trivial, data needs to be passed around, by either:
+- storing the data in the shared, outer function scope, or;
+- passing the data along from one [`async`](http://caolan.github.io/async/).waterfall callback to the next
+
+Take a look for yourself!
 
 ### Promises, without async/await
 
@@ -86,8 +92,7 @@ const run = (userId) => {
 ```
 
 **Note:**
-- there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it)
-- you can also store data in the function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the function scope of `run`. You can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`). However, both solutions don't scale well as functionality increases in complexity
+- Promises are nested because earlier data (ie. `user` and `posts`) needs to be accessible to be used later
 
 ### callbacks with [`async` module](http://caolan.github.io/async/)
 
@@ -157,7 +162,7 @@ const done = (err, postsWithComments) => {
 ```
 
 **Note:**
-- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction like [`async`](http://caolan.github.io/async/)
+- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction like [`async`](http://caolan.github.io/async/).parallel or a similar library
 
 ## Why wait?
 
