@@ -64,7 +64,7 @@ try {
 - whenever you use `await`, the surrounding function needs to be declared to be `async`
 - use `try/catch` to handle any Promise that fails within the `async` function
 
-Looks quite neat, huh? Below I show how this could be implemented without `async/await` with only Promises/callbacks. What you is that the code has more boiler plate, is more indented and therefore harder to read.
+Looks quite neat, huh? Below I show how this could be implemented without `async/await` with only Promises/callbacks. What you see is that the code has more boiler plate, is more indented and therefore harder to read.
 
 The reason for this is that although the example is trivial, data needs to be passed around, by either:
 - storing the data in the shared, outer function scope, or;
@@ -94,7 +94,7 @@ const run = (userId) => {
 **Note:**
 - Promises are nested because earlier data (ie. `user` and `posts`) needs to be accessible to be used later
 
-### callbacks with [`async` module](http://caolan.github.io/async/)
+### Callbacks with [`async` module](http://caolan.github.io/async/)
 
 ```js
 const run = (userId) => {
@@ -123,7 +123,6 @@ const run = (userId) => {
 **Note:**
 - 'passing along data' is cumbersome and so is error-handling (`if (err) return done(err);` much lately?)
 - there are other control flow libraries that offer similar solutions
-- you could also decide to keep data you need later in the function scope of `run` instead of passing it along in each step of the waterfall. However, this is harder to maintain when complexity increases
 
 ### Mere callbacks
 
@@ -162,7 +161,7 @@ const done = (err, postsWithComments) => {
 ```
 
 **Note:**
-- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction like [`async`](http://caolan.github.io/async/).parallel or a similar library
+- as you see, getting `getUser` and `getPosts` to execute in parallel is pretty ugly without a proper abstraction like [`async`](http://caolan.github.io/async/).parallel or a similar library
 
 ## Why wait?
 
