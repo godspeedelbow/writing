@@ -1,6 +1,6 @@
 # Wait up for `async/await`, it's great!
 
-`async/await` is a new javascript feature that allows you to write synchronous code that is executed asynchronously. This makes your code easier to read and easier to reason about.
+`async/await` is a new javascript feature that allows you to wrap asynchronous code, so it appears to be synchronous. This makes your code easier to read and easier to reason about.
 
 *asynchronicity with callbacks:*
 ```js
@@ -19,8 +19,8 @@ getUserPromise(userId)
 
 *asynchronicity with Promises plus async/await:*
 ```js
-const user = await getUserPromise(userId); // put result in `user` when Promise resolves
-console.log('user', user); // continue synchronously as if nothing happened
+const user = await getUserPromise(userId); // 'await' the Promise to resolve and assign result to `user`
+console.log('user', user);
 ```
 
 The `await` keyword 'halts' the code execution cursor until the Promise is resolved. As you don't need to use callback functions anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
@@ -29,15 +29,14 @@ The `await` keyword 'halts' the code execution cursor until the Promise is resol
 - **no callback functions** means less boiler plate and less indentation
 - a **single, shared function scope** removes the need to 'pass data around' - _it's just there_
 
-## A non-trivial example
+## A trivial example
 
 The power of `async/await` truly shines in situations where there are multiple asynchronous operations that need to be composed in to a single result.
 
 Consider the following functionality:
-- fetch a user and their posts (in parallel)
+- fetch a user and their posts (in parallel, to speed up execution)
 - get the comments on those posts
 - parse the posts with the comments
-- log the user and the parsed posts
 
 You can implement the above functionality with `async/await` quite elegantly as follows.
 
@@ -51,14 +50,11 @@ const run = async userId => {
   ]);
   // user and post are now available in scope
   const comments = await getComments(posts);
-  const postsWithComments = await parsePostsWithComments(posts, comments);
-
-  console.log('user', user);
-  console.log('postsWithComments', postsWithComments);
+  return await parsePostsWithComments(user, posts, comments);
 }
 
 try {
-  run(userId);
+  console.log('postsWithComments', run(userId);
 } catch (err) {
   console.log('err', err);
 }
@@ -79,12 +75,11 @@ const run = (userId) => {
     getPosts(userId),
   ]).then([user, posts, comments] => {
     getComments(posts).then(comments => {
-      parsePostsWithComments(posts, comments).then(postsWithComments => {
-        console.log('user', user);
+      parsePostsWithComments(user, posts, comments).then(postsWithComments => {
         console.log('postsWithComments', postsWithComments);
       });
     });
-  }).fail(err => {
+  }).catch(err => {
     console.log('err', err);
   });
 }
@@ -109,15 +104,12 @@ const run = (userId) => {
       getComments(posts, (err, comments) => callback(err, user, posts, comments));
     },
     (user, posts, comments, callback) => {
-      parsePostsWithComments(posts, comments, (err, postsWithComments) => {
-        callback(err, user, postsWithComments);
-      });
+      parsePostsWithComments(user, posts, comments, callback);
     },
-  ], (err, user, postsWithComments) => {
+  ], (err, postsWithComments) => {
     if (err) {
       console.log('err', err);
     } else
-      console.log('user', user);
       console.log('postsWithComments', postsWithComments);
   });
 }
@@ -125,8 +117,8 @@ const run = (userId) => {
 
 **Note:**
 - 'passing along data' is cumbersome and so is error-handling (`if (err) return done(err);` much lately?)
-- because of the nature of callbacks in NodeJS, errors stacks are incomplete
 - there are other control flow libraries that offer similar solutions
+- you could also decide to keep data you need later in the function scope of `run` instead of passing it along in each step of the waterfall. However, this is harder to maintain when complexity increases
 
 ### Mere callbacks
 
@@ -150,9 +142,7 @@ const run = (userId) => {
     getComments(posts, (err, comments) => {
       if (err) return done(err);
 
-      parsePostsWithComments(posts, comments, (err, postsWithComments) => {
-        done(err, user, postsWithComments)
-      });
+      parsePostsWithComments(user, posts, comments, done);
     });
   }
 }
@@ -161,7 +151,6 @@ const done = (err, postsWithComments) => {
   if (err) {
     console.log('err', err);
   } else
-    console.log('user', user);
     console.log('postsWithComments', postsWithComments);
   }
 };
