@@ -1,3 +1,3 @@
 # writing
 
-2016-12-17: [Wait up for `async/await`, it's great](async-await.md)
+2017-03-02: [Wait up for `async/await`, it's great](https://medium.com/@godspeedelbow/wait-up-for-async-await-its-great-a69029cc1b6a#.3qls8hahn)
