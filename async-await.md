@@ -1,23 +1,31 @@
 # Wait up for `async/await`, it's great!
 
-`async/await` is a new javascript feature that allows you to write asynchronous code without callbacks. This makes your code easier to read and easier to reason about. 
+`async/await` is a new javascript feature that allows you to write synchronous code that is executed asynchronously. This makes your code easier to read and easier to reason about.
 
-It works like this: whenever you use a Promise to deal with asynchronicity, use the `await` keyword to 'halt' the code execution cursor until the Promise is resolved.
-
-*old goodness:*
+*asynchronicity with callbacks:*
 ```js
-getUserPromise(userId).then(user => console.log('user', user)); // execute the callback when Promise resolves
+getUser(userId, (err, user) => {
+  if (err) return console.error('error', err);
+  console.log('user', user);
+});
 ```
 
-*new goodness:*
+*asynchronicity with Promises:*
+```js
+getUserPromise(userId)
+  .then(user => console.log('user', user));
+  .catch(err => console.error('error', err));
+```
+
+*asynchronicity with Promises plus async/await:*
 ```js
 const user = await getUserPromise(userId); // put result in `user` when Promise resolves
-console.log('user', user); // continue sychronously as if nothing happened
+console.log('user', user); // continue synchronously as if nothing happened
 ```
 
-As you don't need to use callbacks anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
+The `await` keyword 'halts' the code execution cursor until the Promise is resolved. As you don't need to use callback functions anymore to deal with asynchronicity, you can now write your code _as if all operations are synchronous_ which is A Good Thing™:
 
-- **'sychronous' execution** is easier to comprehend
+- **'synchronous' (downward) execution** is easier to read and therefore comprehend
 - **no callback functions** means less boiler plate and less indentation
 - a **single, shared function scope** removes the need to 'pass data around' - _it's just there_
 
@@ -36,12 +44,12 @@ You can implement the above functionality with `async/await` quite elegantly as 
 ### Promises, using async-await
 
 ```js
-const run = async (userId) => {
+const run = async userId => {
   const [user, posts] = await Promise.all([
     getUser(userId),
     getPosts(userId),
   ]);
-
+  // user and post are now available in scope
   const comments = await getComments(posts);
   const postsWithComments = await parsePostsWithComments(posts, comments);
 
@@ -84,9 +92,9 @@ const run = (userId) => {
 
 **Note:**
 - there's a need for nested Promises because earlier data (e.g. `user`) needs to be accessible to be used later (i.e. when logging it)
-- you can also store data in the outer function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the scope of `run`. You can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`). However, both solutions don't scale well as functionality increases in complexity
+- you can also store data in the function scope of `run`. Then you don't need to nest Promises, as they all have access to the data via the function scope of `run`. You can also use a Promise library to store the data on a context object so that it is available in subsequent Promises (usually via `this`). However, both solutions don't scale well as functionality increases in complexity
 
-### [`async` module](http://caolan.github.io/async/)
+### callbacks with [`async` module](http://caolan.github.io/async/)
 
 ```js
 const run = (userId) => {
@@ -108,7 +116,7 @@ const run = (userId) => {
   ], (err, user, postsWithComments) => {
     if (err) {
       console.log('err', err);
-    } else 
+    } else
       console.log('user', user);
       console.log('postsWithComments', postsWithComments);
   });
@@ -117,7 +125,7 @@ const run = (userId) => {
 
 **Note:**
 - 'passing along data' is cumbersome and so is error-handling (`if (err) return done(err);` much lately?)
-- because of the nature of callbacks in nodejs, errors stacks are incomplete
+- because of the nature of callbacks in NodeJS, errors stacks are incomplete
 - there are other control flow libraries that offer similar solutions
 
 ### Mere callbacks
@@ -152,7 +160,7 @@ const run = (userId) => {
 const done = (err, postsWithComments) => {
   if (err) {
     console.log('err', err);
-  } else 
+  } else
     console.log('user', user);
     console.log('postsWithComments', postsWithComments);
   }
@@ -160,7 +168,7 @@ const done = (err, postsWithComments) => {
 ```
 
 **Note:**
-- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction
+- getting `getUser` and `getPosts` to execute in parallel, is pretty ugly without a proper abstraction like [`async`](http://caolan.github.io/async/)
 
 ## Why wait?
 
